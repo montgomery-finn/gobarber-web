@@ -40,7 +40,7 @@ const SignUp: React.FC = () => {
                 abortEarly: false, //para validar todos os campos mesmo que um já tenha dado erro
             });
 
-            api.post('/users', data);
+            await api.post('/users', {...data, isProvider: true});
 
             addToast({
                 type: "success",
@@ -51,6 +51,8 @@ const SignUp: React.FC = () => {
             history.push('/');
         }
         catch(err){
+            console.log("Erro => ", JSON.stringify(err));
+           
             if(err instanceof Yup.ValidationError){
                 formRef.current?.setErrors(getValidationErrors(err));
             }
